@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
   url: "https://cnft-tools.vercel.app/",
   ogImage: "https://cnft-tools.vercel.app/assets/og.png",
   links: {
-    twitter: "https://twitter.com/trankhac_vy",
-    github: "https://github.com/trankhacvy/cnft-tools",
+    twitter: "https://twitter.com/Shyft_to",
+    github: "https://github.com/Shyft-to/cnft-tools",
   },
 }

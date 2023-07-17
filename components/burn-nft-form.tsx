@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Networks } from "@/config/enum"
@@ -18,7 +18,6 @@ import { useToast } from "./ui/toast"
 import { Typography } from "./ui/typography"
 
 const formSchema = z.object({
-  merkle_tree: z.string().trim().min(1, { message: "This field is required." }),
   nft_address: z.string().trim().min(1, { message: "This field is required." }),
   network: z.enum(Networks),
 })
@@ -33,7 +32,6 @@ export function BurnNFTForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      merkle_tree: "",
       nft_address: "",
       network: "devnet",
     },
@@ -51,7 +49,6 @@ export function BurnNFTForm() {
         return
       }
       const response = await burnNFT({
-        merkle_tree: values.merkle_tree,
         nft_address: values.nft_address,
         wallet_address: publicKey.toBase58(),
         network: values.network,
@@ -100,7 +97,6 @@ export function BurnNFTForm() {
           if (response.success) {
             setNFTs(response.result.nfts)
             form.reset({
-              merkle_tree: "",
               nft_address: response.result.nfts?.[0].mint,
               network: "devnet",
             })
@@ -130,22 +126,6 @@ export function BurnNFTForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="rounded-2xl shadow-card bg-white flex flex-col gap-5 p-5 mb-5">
-            {/* merkle tree */}
-            <FormField
-              control={form.control}
-              name="merkle_tree"
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <FormLabel>Merkle tree</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Merkle tree address" error={fieldState.invalid} {...field} />
-                  </FormControl>
-                  <FormDescription>Merkle tree where NFT present</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* nft */}
             <FormField
               control={form.control}

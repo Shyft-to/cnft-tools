@@ -56,7 +56,6 @@ export type MintNFTResult = {
 
 export type TransferNFTRequestBody = {
   network: Network
-  merkle_tree: string
   nft_address: string
   sender: string
   receiver: string
@@ -69,7 +68,6 @@ export type TransferNFTResult = {
 
 export type BurnNFTRequestBody = {
   network: string
-  merkle_tree: string
   nft_address: string
   wallet_address: string
 }
